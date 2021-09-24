@@ -1,0 +1,55 @@
+.icon {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+.icon.button {
+  cursor: pointer;
+}
+.icon.button:hover {
+  background-color: #34c3ff;
+}
+.icon.button.active {
+  background-color: #34c3ff;
+}
+.icon.element.anemo {
+  background-image: url("../icons/Elements/Anemo.png");
+}
+.icon.element.cryo {
+  background-image: url("../icons/Elements/Cryo.png");
+}
+.icon.element.dendro {
+  background-image: url("../icons/Elements/Dendro.png");
+}
+.icon.element.electro {
+  background-image: url("../icons/Elements/Electro.png");
+}
+.icon.element.geo {
+  background-image: url("../icons/Elements/Geo.png");
+}
+.icon.element.hydro {
+  background-image: url("../icons/Elements/Hydro.png");
+}
+.icon.element.pyro {
+  background-image: url("../icons/Elements/Pyro.png");
+}
+.icon.wtype.sword {
+  background-image: url("../icons/WeaponTypes/Sword.png");
+}
+.icon.wtype.claymore {
+  background-image: url("../icons/WeaponTypes/Claymore.png");
+}
+.icon.wtype.polearm {
+  background-image: url("../icons/WeaponTypes/Polearm.png");
+}
+.icon.wtype.bow {
+  background-image: url("../icons/WeaponTypes/Bow.png");
+}
+.icon.wtype.catalyst {
+  background-image: url("../icons/WeaponTypes/Catalyst.png");
+}
