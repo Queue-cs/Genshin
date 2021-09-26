@@ -5,22 +5,11 @@
   <div id="site"></div>
   <script type="text/javascript">
     var loc = window.location;
-    var path = loc.pathname.slice(1);
-    var hash = loc.hash.slice(1);
-    var redirectTo = loc.protocol + '//' + loc.host + '/?';
-
-    if ((hash && !path) && hash[0] === '/') {
-      // redirect from old hash router urls
-      redirectTo += 'path=' + hash.slice(1);
-    } else {
-
-    }
+    var path = loc.pathname.slice(1).replace("genshin/", "");
+    var redirectTo = loc.protocol + '//' + loc.host + '/genshin/?';
     if (path) {
       redirectTo += 'path=' + path;
       if (hash) redirectTo += '&';
-    }
-    if (hash) {
-      redirectTo += 'hash=' + hash;
     }
     window.location.replace(redirectTo);
   </script>
