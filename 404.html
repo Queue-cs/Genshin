@@ -9,7 +9,6 @@
     var redirectTo = loc.protocol + '//' + loc.host + '/genshin/?';
     if (path) {
       redirectTo += 'path=' + path;
-      if (hash) redirectTo += '&';
     }
     window.location.replace(redirectTo);
   </script>
