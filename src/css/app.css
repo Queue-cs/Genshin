@@ -95,7 +95,6 @@ code {
   position: relative;
   width: 100%;
   height: 100%;
-  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
   transition: all 0.3s ease-out;
@@ -121,20 +120,12 @@ code {
 .item .header {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  pointer-events: none;
   width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .item .info {
   text-align: center;
   background-color: rgba(0, 0, 0, 0.2);
-  pointer-events: none;
   width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   position: absolute;
   z-index: 1;
 }
@@ -163,6 +154,9 @@ code {
   color: #e9ebf0;
   background-color: #1a1d24;
 }
+.characterInfo .tableRows.header {
+  font-weight: bold;
+}
 .characterInfo .tableRows .row:not(:last-child) {
   padding-bottom: 6px;
   border-bottom: 1px solid #292d33;
@@ -179,6 +173,28 @@ code {
 .characterInfo .constellations .constellation:not(:last-child) {
   padding-bottom: 10px;
   border-bottom: 1px solid #292d33;
+}
+.weapons .weaponList .row {
+  padding-top: 6px;
+  transition: all 0.3s ease-out;
+}
+.weapons .weaponList .row .container > * {
+  padding-left: 3px;
+  padding-right: 3px;
+}
+.weapons .weaponList .row:not(:last-child) {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #292d33;
+}
+.weapons .weaponList .row:hover {
+  color: #e9ebf0;
+  background-color: #1a1d24;
+}
+.weapons .weaponList .row.header {
+  font-weight: bold;
+}
+.weapons .weaponList .row .effectName {
+  font-weight: bold;
 }
 .updates .row {
   padding: 6px 10px;

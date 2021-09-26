@@ -5,6 +5,8 @@ import { Content, FlexboxGrid } from 'rsuite';
 import CharactersList from './CharactersList';
 import CharacterInfo from './CharacterInfo';
 
+import genshindb from 'genshin-db';
+
 let charactersDB = {};
 const allCharas = genshindb.talents('names', { matchCategories: true });
 for (let i = 0; i < allCharas.length; i++) {

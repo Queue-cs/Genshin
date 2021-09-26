@@ -2,6 +2,8 @@ import { FlexboxGrid } from 'rsuite';
 
 import ItemIcon from '../ItemIcon';
 
+import genshindb from 'genshin-db';
+
 const CharacterInfoAscCost = ({ costs }) => {
   console.log(costs);
   let rows = [];

@@ -6,6 +6,8 @@ import CharacterInfoConstellations from './CharacterInfoConstellations';
 import CharacterInfoAscCost from './CharacterInfoAscCosts';
 import CharacterInfoTalentCost from './CharacterinfoTalentCosts';
 
+import genshindb from 'genshin-db';
+
 const CharacterInfo = ({ data }) => {
   const name = data.talentName;
   const talents = genshindb.talents(name);

@@ -10,6 +10,7 @@ import About from './About';
 
 import '../css/app.css';
 import Updates from './Updates';
+import Weapons from './Weapons/Weapons';
 
 // get original url hash
 (function (location) {
@@ -38,7 +39,6 @@ const App = observer(class extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.store.lastVisitVersion);
     this.setState({
       showUpdates: this.props.store.outDated
     })
@@ -48,7 +48,6 @@ const App = observer(class extends React.Component {
     this.setState({
       showUpdates: true
     })
-    console.log("ran");
   }
 
   onHideUpdate = () => {
@@ -73,7 +72,9 @@ const App = observer(class extends React.Component {
             {
               isReady &&
               <Switch>
-                <Route path="/weapons"></Route>
+                <Route path="/weapons" render={routeProps => (
+                  <Weapons store={store} {...routeProps} />
+                )} />
                 <Route path="/useful-info"></Route>
                 <Route path="/about">
                   <About onShowUpdate={this.onShowUpdate} />

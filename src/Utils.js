@@ -21,6 +21,29 @@ class Utils {
     return val;
   }
 
+  StringFormat(effect, ...numbers) {
+    if (effect === undefined || numbers.length === 0) return;
+
+    for (let i = 0; i < numbers[0].length; i++) {
+      let values = numbers.reduce((acc, curr) => {
+        if (acc !== "") acc += '/';
+        return acc + curr[i];
+      }, "");
+      effect = effect.replace(new RegExp(`\\{${i}\\}`, 'g'), values);
+    }
+    return effect;
+  }
+
+  SimilarMaterial(a, b) {
+    // check if crown
+    if (a.sortorder === 1856 || b.sortorder === 1856) return false;
+    if (Math.abs(a.sortorder - b.sortorder) > 1) return false;
+    if (a.rarity === b.rarity) return false;
+    // check name?
+    return true;
+  }
+
+
   Markdown(string) {
     return <ReactMarkdown>
       {string.replaceAll("\n", "  \n")}
