@@ -8,13 +8,14 @@ import Store from './store/Store';
 
 // get original url hash from github 404 redirect
 (function (location) {
-  let search = location.search;
+  const search = location.search;
+  const repoName = "genshin/"; // keep this blank if your gitpage goes directly too username.github.io
   if (search) {
     const path = /path=(.*?)(?:&|$)/.exec(search);
     let newPath = '';
     if (path) newPath += path[1];
     if (newPath) {
-      window.history.replaceState(null, null, '/' + newPath);
+      window.history.replaceState(null, null, repoName + newPath);
     }
   }
 })(window.location);
