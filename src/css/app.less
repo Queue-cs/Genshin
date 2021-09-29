@@ -61,6 +61,7 @@ code {
 }
 
 .tags {
+  user-select: none;
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -182,24 +183,6 @@ code {
 }
 
 .characterInfo {
-    .tableRows {
-      padding: 6px 10px;
-      &.odd {
-        color:#e9ebf0;
-        background-color: #1a1d24
-      }
-      &.header {
-        font-weight: bold;
-      }
-      .row:not(:last-child) {
-        padding-bottom: 6px;
-        border-bottom: 1px solid #292d33;
-      }
-      .row:not(:first-child) {
-        padding-top: 6px;
-      }
-    }
-
   .talents {
     margin-bottom: 40px;
 
@@ -214,7 +197,6 @@ code {
       border-bottom: 1px solid #292d33;
     }
   }
-
 }
 
 .weapons {
@@ -230,7 +212,7 @@ code {
         padding-bottom: 6px;
         border-bottom: 1px solid #292d33;
       }
-      &:hover {
+      &:hover:not(.header) {
         color:#e9ebf0;
         background-color: #1a1d24
       }
@@ -241,6 +223,31 @@ code {
         font-weight: bold;
       }
     }
+  }
+
+  .refinements {
+    .refinement:not(:last-child) {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #292d33;
+    }
+  }
+}
+
+.tableRows {
+  padding: 6px 10px;
+  &.odd {
+    color:#e9ebf0;
+    background-color: #1a1d24
+  }
+  &.header {
+    font-weight: bold;
+  }
+  .row:not(:last-child) {
+    padding-bottom: 6px;
+    border-bottom: 1px solid #292d33;
+  }
+  .row:not(:first-child) {
+    padding-top: 6px;
   }
 }
 
@@ -342,8 +349,18 @@ code {
   display: inline;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .flex1 {
   flex: 1;
+}
+
+.stretchCenterFlex {
+  display:flex;
+  align-self:stretch;
+  align-items:center;
 }
 
 .alignSelfCenter {

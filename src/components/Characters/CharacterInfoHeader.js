@@ -13,7 +13,7 @@ const CharacterInfoHeader = ({ data }) => {
     "Affiliation": data.affiliation,
     "Constellation": data.constellation,
     "CV": data.cv,
-    "Fandom": data.url.fandom ? [<a key="url" href={data.url.fandom} >{data.url.fandom}</a>] : ""
+    "Fandom": data.url.fandom ? <a href={data.url.fandom} >{data.url.fandom}</a> : ""
   };
   let rows = [];
   let i = 0;

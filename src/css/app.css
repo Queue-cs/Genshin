@@ -46,6 +46,10 @@ code {
   padding-left: 5px;
   flex-grow: 1;
 }
+.tags {
+  -webkit-user-select: none;
+          user-select: none;
+}
 .tags ul {
   display: flex;
   flex-wrap: wrap;
@@ -147,23 +151,6 @@ code {
 .item.character .icon {
   margin: 0px;
 }
-.characterInfo .tableRows {
-  padding: 6px 10px;
-}
-.characterInfo .tableRows.odd {
-  color: #e9ebf0;
-  background-color: #1a1d24;
-}
-.characterInfo .tableRows.header {
-  font-weight: bold;
-}
-.characterInfo .tableRows .row:not(:last-child) {
-  padding-bottom: 6px;
-  border-bottom: 1px solid #292d33;
-}
-.characterInfo .tableRows .row:not(:first-child) {
-  padding-top: 6px;
-}
 .characterInfo .talents {
   margin-bottom: 40px;
 }
@@ -186,7 +173,7 @@ code {
   padding-bottom: 6px;
   border-bottom: 1px solid #292d33;
 }
-.weapons .weaponList .row:hover {
+.weapons .weaponList .row:hover:not(.header) {
   color: #e9ebf0;
   background-color: #1a1d24;
 }
@@ -195,6 +182,27 @@ code {
 }
 .weapons .weaponList .row .effectName {
   font-weight: bold;
+}
+.weapons .refinements .refinement:not(:last-child) {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #292d33;
+}
+.tableRows {
+  padding: 6px 10px;
+}
+.tableRows.odd {
+  color: #e9ebf0;
+  background-color: #1a1d24;
+}
+.tableRows.header {
+  font-weight: bold;
+}
+.tableRows .row:not(:last-child) {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #292d33;
+}
+.tableRows .row:not(:first-child) {
+  padding-top: 6px;
 }
 .updates .row {
   padding: 6px 10px;
@@ -277,8 +285,16 @@ code {
 .inline {
   display: inline;
 }
+.pointer {
+  cursor: pointer;
+}
 .flex1 {
   flex: 1;
+}
+.stretchCenterFlex {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
 }
 .alignSelfCenter {
   align-self: center;

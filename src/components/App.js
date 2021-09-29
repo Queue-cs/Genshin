@@ -11,24 +11,7 @@ import About from './About';
 import '../css/app.css';
 import Updates from './Updates';
 import Weapons from './Weapons/Weapons';
-
-// get original url hash
-(function (location) {
-  let search = location.search;
-  if (location.hash && location.hash[1] === '/') {
-    search = '?path=' + location.hash.slice(2);
-  }
-  if (search) {
-    const path = /path=(.*?)(?:&|$)/.exec(search);
-    const hash = /hash=(.*?)(?:&|$)/.exec(search);
-    let newPath = '';
-    if (path) newPath += path[1];
-    if (hash) newPath += '#' + hash[1];
-    if (newPath) {
-      window.history.replaceState(null, null, '/' + newPath);
-    }
-  }
-})(window.location);
+import ScrollToTop from './ScrollToTop';
 
 const App = observer(class extends React.Component {
   constructor(props) {
@@ -62,6 +45,7 @@ const App = observer(class extends React.Component {
     const isReady = store.isReady;
     return (
       <Router basename={process.env.PUBLIC_URL}>
+        <ScrollToTop />
         <Container>
           <Header>
             <Route render={routeProps => (
@@ -72,7 +56,7 @@ const App = observer(class extends React.Component {
             {
               isReady &&
               <Switch>
-                <Route path="/weapons" render={routeProps => (
+                <Route path={["/weapons/:weaponID?"]} render={routeProps => (
                   <Weapons store={store} {...routeProps} />
                 )} />
                 <Route path="/useful-info"></Route>
@@ -84,7 +68,7 @@ const App = observer(class extends React.Component {
                   <Schedule store={store} />
                 </Content> */}
                 </Route>
-                <Route path={["/characters/:characterID", "*"]} render={routeProps => (
+                <Route path={["/characters/:characterID?", "*"]} render={routeProps => (
                   <Characters store={store} {...routeProps} />
                 )} />
 

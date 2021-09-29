@@ -1,5 +1,4 @@
 import Tags from "./Tags";
-import ImgIcon from "../Icon";
 
 const characterRarityList = {
   "4": "4-Star",

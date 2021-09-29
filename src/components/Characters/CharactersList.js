@@ -60,12 +60,12 @@ class CharactersList extends React.PureComponent {
     }
     let mats = [];
     for (let i = 0; i < lvlMatsSorted.length; i++) {
-      const element = lvlMatsSorted[i];
-      mats.push(<a href={element.url.fandom} target="_blank">
+      const mat = lvlMatsSorted[i];
+      mats.push(<a href={mat.url.fandom} target="_blank" rel="noreferrer" key={"lvlmaterial-" + i}>
         <img
-          key={"lvlmaterial-" + i}
-          src={element.images.fandom}
+          src={mat.images.fandom}
           style={{ maxWidth: "32px" }}
+          alt={mat.name}
         />
       </a>);
     }

@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Button, Content, Icon } from 'rsuite';
-import Updates from './Updates';
 
 const About = memo(({ onShowUpdate }) => {
   return <Content className="content about">

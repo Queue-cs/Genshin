@@ -5,7 +5,6 @@ import ItemIcon from '../ItemIcon';
 import genshindb from 'genshin-db';
 
 const CharacterInfoAscCost = ({ costs }) => {
-  console.log(costs);
   let rows = [];
   let ascI = 0;
 
@@ -28,6 +27,7 @@ const CharacterInfoAscCost = ({ costs }) => {
         const element = entry[k];
         boxes.push(
           <ItemIcon
+            key={"material" + key + element.name}
             itemData={element}
             count={element.count}
             size="48px"

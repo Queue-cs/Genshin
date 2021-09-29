@@ -12,11 +12,46 @@ class WeaponsList extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      list: [],
       weapons: [],
       rarity: [],
-      search: ""
+      search: "",
+      rarityAsc: false,
+      baseAsc: false
     }
-
+  }
+  componentDidMount() {
+    this.updateSort();
+  }
+  updateSort = () => {
+    // TODO: merge tag sorting into here
+    const { weaponsDB } = this.props;
+    const { rarityAsc, baseAsc } = this.state;
+    let list = [];
+    for (const key in weaponsDB) {
+      if (Object.hasOwnProperty.call(weaponsDB, key)) {
+        const wList = [...weaponsDB[key]].sort((a, b) => {
+          let delta = 0;
+          const deltaRarity = a.rarity - b.rarity;
+          const lvl90a = a.stats(90) || a.stats(70);
+          const lvl90b = b.stats(90) || b.stats(70);
+          const deltaBase = lvl90a.attack - lvl90b.attack;
+          delta = deltaRarity * (rarityAsc ? 1 : -1);
+          if (delta === 0) {
+            if (baseAsc) {
+              delta = deltaBase;
+            } else {
+              delta = -deltaBase;
+            }
+          }
+          return delta;
+        });
+        for (let i = 0; i < wList.length; i++) {
+          list.push(wList[i]);
+        }
+      }
+    }
+    this.setState({ list });
   }
   onSearch = (search) => {
     this.setState({ search });
@@ -27,7 +62,7 @@ class WeaponsList extends React.PureComponent {
   setRarity = (newTags) => {
     this.setState({ "rarity": newTags });
   }
-  wepRender = (key, data) => {
+  weaponRender = (key, data) => {
     const { rarity, effect, effectname, stats, substat, subvalue, baseatk, r1, costs } = data;
     const className = "row weapon rarity" + rarity;
     let stars = [];
@@ -37,7 +72,7 @@ class WeaponsList extends React.PureComponent {
     const lvl90 = stats(90) || stats(70);
     const baseAtk90 = Math.round(lvl90.attack) || "";
     const isPercent = substat !== "Elemental Mastery";
-    const sub90 = lvl90.specialized ? Utils.Format(lvl90.specialized, isPercent ? "P" : "I") : "N/A";
+    const sub90 = Utils.FormatWSub(lvl90.specialized, substat);
     const subSuffix = isPercent ? "%" : "";
     const style = {
       width: "auto",
@@ -50,11 +85,11 @@ class WeaponsList extends React.PureComponent {
     for (let i = 0; i < lvlMats.length; i++) {
       const mat = genshindb.materials(lvlMats[i].name);
       if (["Character Level-Up Material", "Weapon Ascension Material"].includes(mat.materialtype)) {
-        mats.push(<a href={mat.url.fandom} target="_blank">
+        mats.push(<a href={mat.url.fandom} target="_blank" rel="noreferrer" key={"lvlmaterial-" + i}>
           <img
-            key={"lvlmaterial-" + i}
             src={mat.images.fandom}
             style={{ maxWidth: "32px" }}
+            alt={mat.name}
           />
         </a>)
       }
@@ -86,7 +121,7 @@ class WeaponsList extends React.PureComponent {
         </FlexboxGrid.Item>
         <FlexboxGrid.Item className="flex1" componentClass={Col} xsHidden smHidden>
           <span className="effectName">{effectname}</span>
-          <p>{Utils.StringFormat(effect, r1)}</p>
+          {Utils.Markdown(Utils.StringFormat(effect, r1) || "")}
         </FlexboxGrid.Item>
         <FlexboxGrid.Item className="flex1" style={{ maxWidth: "103px", width: "10%" }}>
           {mats}
@@ -94,16 +129,25 @@ class WeaponsList extends React.PureComponent {
       </FlexboxGrid>
     </FlexboxGrid.Item>
   }
+  toggleBaseAsc = () => {
+    this.setState({
+      baseAsc: !this.state.baseAsc
+    }, this.updateSort)
+  }
+  toggleRarityAsc = () => {
+    this.setState({
+      rarityAsc: !this.state.rarityAsc
+    }, this.updateSort)
+  }
   render() {
-    const { weaponsDB } = this.props;
-    const { weapons, rarity, search } = this.state;
+    const { list, weapons, rarity, search, rarityAsc, baseAsc } = this.state;
     let blocks = [];
-    for (const wepName in weaponsDB) {
-      const data = weaponsDB[wepName];
-      if (!wepName.toLowerCase().includes(search.toLowerCase())) continue;
+    for (let i = 0; i < list.length; i++) {
+      const data = list[i];
+      if (!data.name.toLowerCase().includes(search.toLowerCase())) continue;
       if (rarity.length > 0 && !rarity.includes(data.rarity)) continue;
       if (weapons.length > 0 && !weapons.includes(data.weapontype)) continue;
-      blocks.push(this.wepRender(wepName, data));
+      blocks.push(this.weaponRender(data.wepKey, data));
     }
     return <React.Fragment>
       <WeaponTags
@@ -124,19 +168,19 @@ class WeaponsList extends React.PureComponent {
         </InputGroup>
       </FlexboxGrid.Item>
       <FlexboxGrid.Item colspan={24} className="weaponList">
-        <FlexboxGrid.Item colspan={24}  >
-          <FlexboxGrid className="row header" align="middle">
+        <FlexboxGrid.Item colspan={24} className="row weapon header"  >
+          <FlexboxGrid className="container" align="middle">
             <FlexboxGrid.Item colspan={3} style={{ maxWidth: "64px" }}>
               Icon
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={4} style={{ minWidth: "125px" }}>
               Name
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={2}>
-              Rarity
+            <FlexboxGrid.Item colspan={2} className="pointer" onClick={this.toggleRarityAsc} >
+              Rarity <Icon icon={rarityAsc ? "arrow-up-line" : "arrow-down-line"} />
             </FlexboxGrid.Item>
-            <FlexboxGrid.Item colspan={2} style={{ minWidth: "75px" }}>
-              Base ATK (Max Lvl)
+            <FlexboxGrid.Item colspan={2} className="pointer" style={{ minWidth: "75px" }} onClick={this.toggleBaseAsc} >
+              Base ATK (Max Lvl) <Icon icon={baseAsc ? "arrow-up-line" : "arrow-down-line"} />
             </FlexboxGrid.Item>
             <FlexboxGrid.Item colspan={2} style={{ minWidth: "75px" }}>
               2nd Stat (Max Lvl)

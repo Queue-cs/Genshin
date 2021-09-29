@@ -1,3 +1,5 @@
+import react from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown'
 
 class Utils {
@@ -21,21 +23,25 @@ class Utils {
     return val;
   }
 
-  StringFormat(effect, ...numbers) {
-    if (effect === undefined || numbers.length === 0) return;
-
-    for (let i = 0; i < numbers[0].length; i++) {
-      let values = numbers.reduce((acc, curr) => {
-        if (acc !== "") acc += '/';
-        return acc + curr[i];
-      }, "");
-      effect = effect.replace(new RegExp(`\\{${i}\\}`, 'g'), values);
+  StringFormat(effect, numbers) {
+    if (effect === undefined || numbers.length === 0) return effect;
+    for (let i = 0; i < numbers.length; i++) {
+      const reg = new RegExp(`\\{${i}\\}`, 'g');
+      const sub = `**${numbers[i]}**`;
+      effect = effect.replace(reg, sub);
     }
     return effect;
   }
 
+  FormatWSub(value, substat) {
+    if (!value && value !== 0) return "N/A";
+    const isPercent = substat !== "Elemental Mastery";
+    const sub = this.Format(value, isPercent ? "P" : "I");
+    return sub;
+  }
+
   SimilarMaterial(a, b) {
-    // check if crown
+    // false if 1 is a crown
     if (a.sortorder === 1856 || b.sortorder === 1856) return false;
     if (Math.abs(a.sortorder - b.sortorder) > 1) return false;
     if (a.rarity === b.rarity) return false;
@@ -50,17 +56,18 @@ class Utils {
     </ReactMarkdown>
   }
 
-  Redirect(history, loc, toTop) {
+  Redirect(history, loc) {
     const location = {
       pathname: loc,
       state: { fromDashboard: true }
     }
     history.push(location);
-    if (toTop) window.scrollTo(0, 0);
   }
 
   isPlainObject(obj) {
-
+    if (react.isValidElement(obj)) {
+      return false;
+    }
     // Basic check for Type object that's not null
     if (typeof obj == 'object' && obj !== null) {
 
@@ -72,7 +79,7 @@ class Utils {
 
       // Otherwise, use internal class
       // This should be reliable as if getPrototypeOf not supported, is pre-ES5
-      return Object.prototype.toString.call(obj) == '[object Object]';
+      return Object.prototype.toString.call(obj) === '[object Object]';
     }
 
     // Not an object

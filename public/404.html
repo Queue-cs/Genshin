@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+  <div id="site"></div>
+  <script type="text/javascript">
+    var loc = window.location;
+    var path = loc.pathname.slice(1).replace("genshin/", "");
+    var redirectTo = loc.protocol + '//' + loc.host + '/genshin/?';
+    if (path) {
+      redirectTo += 'path=' + path;
+    }
+    window.location.replace(redirectTo);
+  </script>
+</body>
+
+</html>

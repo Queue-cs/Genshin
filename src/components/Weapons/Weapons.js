@@ -3,14 +3,13 @@ import { Content, FlexboxGrid } from 'rsuite';
 
 import genshindb from 'genshin-db';
 import WeaponsList from './WeaponsList';
-
-console.log(genshindb.weapons('Dull Blade'));
+import WeaponInfo from './WeaponInfo';
 
 const Weapons = class extends React.PureComponent {
   constructor(props) {
     super(props);
     const allWeapons = genshindb.weapons('names', { matchCategories: true });
-    let sortedDB = {
+    this.sortedDB = {
       "Sword": [],
       "Claymore": [],
       "Polearm": [],
@@ -22,14 +21,14 @@ const Weapons = class extends React.PureComponent {
       const wepName = allWeapons[i];
       const wepKey = wepName.replace(/[\s]+/g, "_").replace(/[\(\)]+/g, "")
       const data = genshindb.weapons(wepName);
-      sortedDB[data.weapontype].push({ ...data, wepKey });
-      sortedDB[data.weapontype].sort((a, b) => {
+      this.sortedDB[data.weapontype].push({ ...data, wepKey });
+      this.sortedDB[data.weapontype].sort((a, b) => {
         return a.rarity - b.rarity
       });
     }
-    for (const key in sortedDB) {
-      for (let i = 0; i < sortedDB[key].length; i++) {
-        const element = sortedDB[key][i];
+    for (const key in this.sortedDB) {
+      for (let i = 0; i < this.sortedDB[key].length; i++) {
+        const element = this.sortedDB[key][i];
         this.flatDB[element.wepKey] = element;
       }
     }
@@ -41,11 +40,10 @@ const Weapons = class extends React.PureComponent {
     const data = this.flatDB[match.params.weaponID];
     return <Content className="content weapons">
       <FlexboxGrid justify="center">
-        {/* {
-          data ? <CharacterInfo data={data} />
-            : <CharactersList charactersDB={charactersDB} history={history} />
-        } */}
-        <WeaponsList weaponsDB={this.flatDB} history={history} />
+        {
+          data ? <WeaponInfo data={data} />
+            : <WeaponsList weaponsDB={this.sortedDB} history={history} />
+        }
       </FlexboxGrid>
     </Content>
 

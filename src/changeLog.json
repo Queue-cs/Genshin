@@ -1,4 +1,6 @@
 {
-  "currentVersion": "0.1",
+  "currentVersion": "0.3",
+  "0.3": "Weapon page completed. \nWeapons list updated to be sortable by Base ATK and 2nd Stat.\nScroll to top on page change fix",
+  "0.2": "Weapons page WIP. Weapons list completed but no weapon page yet. \nCharacters on the Characters list page now show their needed materials.",
   "0.1": "Beta release. Only Character database is currently created."
 }

@@ -56,7 +56,7 @@ const NavBar = observer(class NavBar extends React.Component {
       showMenu, top
     } = this.state;
     const {
-      isXS, windowWidth
+      isXS
     } = this.props.store;
     const activeKey = this.props.location.pathname;
     const barStyle = {
